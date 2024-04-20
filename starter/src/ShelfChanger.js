@@ -1,10 +1,9 @@
 import React from "react";
 import * as BookAPI from "./BooksAPI.js";
-const ShelfChanger = ({ book,reload,setReload }) => {
+const ShelfChanger = ({ book }) => {
   const handleUpdate = (e) => {
     BookAPI.update(book,e.target.value).then()
     console.log(e.target.value)
-    setReload(!reload)
   };
 
   return (

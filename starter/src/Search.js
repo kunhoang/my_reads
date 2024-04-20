@@ -2,14 +2,10 @@ import "./main.css";
 import * as BookAPI from "./BooksAPI.js";
 import { useState } from "react";
 import ShelfChanger from "./ShelfChanger.js";
-const Search = ({
-  showSearchPage,
-  setShowSearchpage,
-  setKeySearch,
-  keySearch,
-  reload,
-  setReload
-}) => {
+import { NavLink } from "react-router-dom";
+const Search = () => {
+  const [keySearch, setKeySearch] = useState("");
+  
   const [searchResult, setSearchResult] = useState([]);
 
   const handleKeySearch = (e) => {
@@ -28,20 +24,10 @@ const Search = ({
     });
   };
 
-  const handleClose = () =>{
-    setShowSearchpage(!showSearchPage)
-    setReload(!reload)
-  }
-
   return (
     <div className="search-books">
       <div className="search-books-bar">
-        <a
-          className="close-search"
-          onClick={handleClose}
-        >
-          Close
-        </a>
+      <NavLink to={"/"} className='close-search'>Close</NavLink>
         <div className="search-books-input-wrapper">
           <input
             type="text"
@@ -67,7 +53,7 @@ const Search = ({
                       backgroundImage: `url(${book.imageLinks.smallThumbnail})`,
                     }}
                   ></div>
-                  <ShelfChanger book={book} reload={reload} setReload={setReload} />
+                  <ShelfChanger book={book}/>
                 </div>
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{book.authors}</div>
