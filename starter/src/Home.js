@@ -7,10 +7,10 @@ const router = createBrowserRouter([
         path: '/',
         element: <App />,
     },
-    {
-        path: '/search',
-        element: <Search />,
-    },
+    // {
+    //     path: '/search',
+    //     element: <Search />,
+    // },
 ])
 function Home() {
     return <RouterProvider router={router} />;

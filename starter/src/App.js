@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import * as BookAPI from "./BooksAPI.js";
 import Search from "./Search.js";
 import ListBook from "./ListBook.js";
-import { NavLink  , Route, Routes, Router } from "react-router-dom";
+import { Link , Route, Routes, Router } from "react-router-dom";
 
 function App() {
   const [listBook, setListBook] = useState([]);
@@ -22,11 +22,11 @@ function App() {
           </div>
           <ListBook listBook={listBook} />
           <div className="open-search">
-            <NavLink to="/search">Add a book</NavLink>
+            <Link to="/search">Add a book</Link>
           </div>
         </div>
         <Routes>
-          <Route exact path="/search" element={<Search />}></Route>
+          <Route path="/search" element={<Search />}></Route>
         </Routes>;
       </div>
   );

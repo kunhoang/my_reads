@@ -7,7 +7,7 @@ const ShelfChanger = ({ book,setSearchResult }) => {
   const activeLink = location.pathname;
   const handleUpdate = (e) => {
     BookAPI.update(book,e.target.value).then(
-      renderListSearch()
+      // renderListSearch()
     )
   };
 
