@@ -25,9 +25,6 @@ function App() {
             <Link to="/search">Add a book</Link>
           </div>
         </div>
-        <Routes>
-          <Route path="/search" element={<Search />}></Route>
-        </Routes>;
       </div>
   );
 }
