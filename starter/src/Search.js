@@ -5,29 +5,30 @@ import ShelfChanger from "./ShelfChanger.js";
 import { NavLink } from "react-router-dom";
 const Search = () => {
   const [keySearch, setKeySearch] = useState("");
-  
+
   const [searchResult, setSearchResult] = useState([]);
 
   const handleKeySearch = (e) => {
-    setKeySearch(e.target.value);
-  };
-
-  const handleListBook = () => {
-    BookAPI.search(keySearch).then((res) => {
-      console.log(res)
-      if(res.error === 'empty query'){
-        setSearchResult([]);
-      }else{
-        setSearchResult(res);
-      }
-      
-    });
+    if (e.target.value === "") {
+      setSearchResult([]);
+    } else {
+      setKeySearch(e.target.value)
+      BookAPI.search(e.target.value).then((res) => {
+        if (res.error === "empty query") {
+          setSearchResult([]);
+        } else {
+          setSearchResult(res);
+        }
+      });
+    }
   };
 
   return (
     <div className="search-books">
       <div className="search-books-bar">
-      <NavLink to={"/"} className='close-search'>Close</NavLink>
+        <NavLink to={"/"} className="close-search">
+          Close
+        </NavLink>
         <div className="search-books-input-wrapper">
           <input
             type="text"
@@ -35,9 +36,6 @@ const Search = () => {
             onChange={handleKeySearch}
           />
         </div>
-        <button className="btn-search" onClick={handleListBook}>
-          Search
-        </button>
       </div>
       <div className="search-books-results">
         <ol className="books-grid">
@@ -50,10 +48,14 @@ const Search = () => {
                     style={{
                       width: 128,
                       height: 193,
-                      backgroundImage: `url(${book.imageLinks.smallThumbnail})`,
+                      backgroundImage: `url(${
+                        book.imageLinks
+                          ? book.imageLinks.smallThumbnail
+                          : "http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api"
+                      })`,
                     }}
                   ></div>
-                  <ShelfChanger book={book}/>
+                  <ShelfChanger book={book} setSearchResult={setSearchResult} />
                 </div>
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{book.authors}</div>

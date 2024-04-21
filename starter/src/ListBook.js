@@ -1,6 +1,6 @@
 import ShelfChanger from "./ShelfChanger";
 
-const ListBook = ({ listBook, reload, setReload }) => {
+const ListBook = ({ listBook}) => {
   const renderBookByShelf = (type) => {
     const bookOfShelf = listBook.filter((book) => book.shelf === type);
     return (
@@ -34,8 +34,6 @@ const ListBook = ({ listBook, reload, setReload }) => {
                     ></div>
                     <ShelfChanger
                       book={book}
-                      reload={reload}
-                      setReload={setReload}
                     />
                   </div>
                   <div className="book-title">{book.title}</div>
