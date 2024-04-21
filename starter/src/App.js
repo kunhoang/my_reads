@@ -1,18 +1,18 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useCallback  } from "react";
 import * as BookAPI from "./BooksAPI.js";
 import Search from "./Search.js";
 import ListBook from "./ListBook.js";
 import { Link , Route, Routes, Router } from "react-router-dom";
 
-function App() {
-  const [listBook, setListBook] = useState([]);
+function App({fetchBooks,listBook,setListBook}) {
+
 
   useEffect(() => {
     BookAPI.getAll().then((res) => {
       setListBook(res);
     });
-  });
+  },[]);
 
   return (
       <div className="app">
@@ -20,7 +20,7 @@ function App() {
           <div className="list-books-title">
             <h1>MyReads</h1>
           </div>
-          <ListBook listBook={listBook} />
+          <ListBook listBook={listBook} fetchBooks={fetchBooks} />
           <div className="open-search">
             <Link to="/search">Add a book</Link>
           </div>

@@ -2,22 +2,17 @@ import React from "react";
 import * as BookAPI from "./BooksAPI.js";
 import { useLocation } from 'react-router-dom';
 
-const ShelfChanger = ({ book,setSearchResult }) => {
+const ShelfChanger = ({ book, fetchBooks }) => {
   const location = useLocation();
   const activeLink = location.pathname;
+  
   const handleUpdate = (e) => {
-    BookAPI.update(book,e.target.value).then(
-      renderListSearch()
-    )
+    BookAPI.update(book, e.target.value).then(() => {
+      if (activeLink === '/search' || activeLink === '/') {
+        fetchBooks();
+      }
+    });
   };
-
-  const renderListSearch = () => {
-    if(activeLink === '/search'){
-      BookAPI.getAll().then((res) => {
-        setSearchResult(res);
-      })
-    }
-  }
 
   return (
     <div className="book-shelf-changer">

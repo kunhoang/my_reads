@@ -1,23 +1,37 @@
 import "./main.css";
 import * as BookAPI from "./BooksAPI.js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ShelfChanger from "./ShelfChanger.js";
 import { NavLink } from "react-router-dom";
-const Search = () => {
-  const [keySearch, setKeySearch] = useState("");
 
+const Search = ({fetchBooks}) => {
+  const [keySearch, setKeySearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  const [listBook, setListBook] = useState([]);
+
+  useEffect(() => {
+    BookAPI.getAll().then((res) => {
+      setListBook(res);
+    });
+  }, []);
 
   const handleKeySearch = (e) => {
-    if (e.target.value === "") {
+    const searchTerm = e.target.value.trim();
+    if (searchTerm === "") {
       setSearchResult([]);
     } else {
-      setKeySearch(e.target.value)
-      BookAPI.search(e.target.value).then((res) => {
+      setKeySearch(searchTerm);
+      BookAPI.search(searchTerm).then((res) => {
         if (res.error === "empty query") {
           setSearchResult([]);
         } else {
-          setSearchResult(res);
+          // Filter out books already in listBook
+          const filteredResult = res.filter((book) => {
+            return !listBook.find(
+              (listBookBook) => listBookBook.id === book.id
+            );
+          });
+          setSearchResult(filteredResult);
         }
       });
     }
@@ -55,7 +69,7 @@ const Search = () => {
                       })`,
                     }}
                   ></div>
-                  <ShelfChanger book={book} setSearchResult={setSearchResult} />
+                  <ShelfChanger book={book} setSearchResult={setSearchResult} fetchBooks={fetchBooks} />
                 </div>
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{book.authors}</div>

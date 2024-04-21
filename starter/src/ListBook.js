@@ -1,6 +1,6 @@
 import ShelfChanger from "./ShelfChanger";
 
-const ListBook = ({ listBook}) => {
+const ListBook = ({listBook,fetchBooks}) => {
   const renderBookByShelf = (type) => {
     const bookOfShelf = listBook.filter((book) => book.shelf === type);
     return (
@@ -33,7 +33,7 @@ const ListBook = ({ listBook}) => {
                       }}
                     ></div>
                     <ShelfChanger
-                      book={book}
+                      book={book} fetchBooks={fetchBooks}
                     />
                   </div>
                   <div className="book-title">{book.title}</div>
